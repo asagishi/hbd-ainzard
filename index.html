@@ -251,16 +251,7 @@ function dropLoot(){
     setTimeout(()=>c.remove(), DURATION);
   }
 }
-  function resize(){
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-resize();
 
-window.addEventListener("resize", resize);
-window.addEventListener("orientationchange", () => {
-  setTimeout(resize, 300);
-});
 </script>
 
 </body>
