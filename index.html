@@ -137,12 +137,15 @@ button:hover{
 .chicken-dance.party{
   animation:chickenDance 0.5s infinite linear;
 }
-  @media (max-width: 480px){
+@media (max-width: 480px){
   .card{
-    max-width: 90%;
-    padding: 22px 18px;
-    border-radius: 20px;
+    background: rgba(255,255,255,0.65);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 15px 40px rgba(0,0,0,.18);
+    border: 1px solid rgba(255,255,255,.35);
   }
+}
 
   h1{
     font-size: 1.7rem;
