@@ -7,80 +7,130 @@
 
 <style>
 :root{
-  --gold:#facc15;
-  --dark:#020617;
   --accent:#22c55e;
 }
 
-*{box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+*{
+  box-sizing:border-box;
+  font-family:'Segoe UI',sans-serif;
+}
 
 body{
   margin:0;
-   min-height: 100dvh;
-  background:
-    linear-gradient(135deg,#fde68a,#fca5a5,#93c5fd);
+  min-height:100vh;
+  background:linear-gradient(135deg,#fde68a,#fca5a5,#93c5fd);
+  color:#1f2937;
+}
+
+/* BACKGROUND PATTERN */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'>\
+<text x='50%' y='40%' font-size='120' text-anchor='middle'>🐔</text>\
+<text x='50%' y='65%' font-size='80' text-anchor='middle'>🎂 🎉</text>\
+</svg>");
+  background-size:180px;
+  opacity:.15;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* CANVAS EFEK */
+#fireworks{
+  position:fixed;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+}
+
+/* WRAPPER AMAN MOBILE */
+.wrapper{
+  min-height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
-  color:#1f2937;
-  overflow:hidden;
-}
-body::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    url("data:image/svg+xml;utf8,\
-<svg xmlns='http://www.w3.org/2000/svg' width='500' height='500'>\
-<rect width='100%' height='100%' fill='none'/>\
-<text x='50%' y='35%' font-size='120' text-anchor='middle'>🐔</text>\
-<text x='50%' y='55%' font-size='90' text-anchor='middle'>🎂</text>\
-<text x='50%' y='75%' font-size='70' text-anchor='middle'>🎈 🎉 🎈</text>\
-</svg>");
-background-size: 180px;
-opacity: .15;
-  background-repeat:repeat;
-  pointer-events:none;
-}
-.card{
+  padding:16px;
+  overflow-y:auto;
   position:relative;
-  background:#ffffff;
-  border-radius:26px;
-  padding:34px 28px;
+  z-index:2;
+}
+
+/* CARD */
+.card{
+  width:100%;
   max-width:440px;
+  background:rgba(255,255,255,.85);
+  backdrop-filter:blur(14px);
+  border-radius:26px;
+  padding:28px 24px;
   text-align:center;
   box-shadow:0 20px 50px rgba(0,0,0,.18);
-  animation:fadeIn 1.2s ease;
+  animation:fadeIn 1s ease;
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:none}
+}
+
+.badge{
+  display:inline-block;
+  margin-bottom:10px;
+  padding:6px 14px;
+  border-radius:999px;
+  border:2px dashed var(--accent);
+  color:#16a34a;
+  background:#ecfeff;
+  font-weight:600;
 }
 
 h1{
   color:#ef4444;
-}
-
-.badge{
-  background:#ecfeff;
-  border:2px dashed #22c55e;
-  color:#16a34a;
+  margin:.4em 0;
 }
 
 .subtitle{
-  opacity:.85;
+  opacity:.8;
   margin-bottom:18px;
 }
 
 .message{
   font-size:1rem;
-  line-height:1.65;
+  line-height:1.6;
   margin-bottom:24px;
 }
 
+/* AYAM */
+.chicken-dance{
+  font-size:72px;
+  display:inline-block;
+  animation:chickenDance 1.2s infinite ease-in-out;
+  transform-origin:bottom center;
+}
+
+@keyframes chickenDance{
+  0%{transform:rotate(0)}
+  25%{transform:rotate(-10deg)}
+  50%{transform:rotate(10deg)}
+  75%{transform:rotate(-6deg)}
+  100%{transform:rotate(0)}
+}
+
+.chicken-dance.party{
+  animation:chickenDance .45s infinite linear;
+}
+
+/* BUTTON */
 button{
   background:linear-gradient(135deg,#22c55e,#16a34a);
+  color:white;
   border:none;
-  color:#fff;
-  padding:15px 26px;
-  border-radius:16px;
+  padding:14px 22px;
   font-size:1rem;
+  border-radius:16px;
   cursor:pointer;
   box-shadow:0 12px 30px rgba(34,197,94,.45);
   transition:.2s;
@@ -93,22 +143,17 @@ button:hover{
 .footer{
   margin-top:18px;
   font-size:.8rem;
-  opacity:.65;
+  opacity:.6;
 }
 
-/* Animations */
-@keyframes fadeIn{
-  from{opacity:0;transform:translateY(25px)}
-  to{opacity:1;transform:none}
-}
-
-/* Confetti */
+/* CONFETTI */
 .confetti{
-  position:absolute;
+  position:fixed;
+  top:-10px;
   width:8px;
   height:8px;
-  top:-10px;
   animation:fall linear forwards;
+  z-index:3;
 }
 
 @keyframes fall{
@@ -117,141 +162,83 @@ button:hover{
     opacity:0;
   }
 }
-.chicken-dance{
-  font-size:80px;
-  margin-bottom:10px;
-  display:inline-block;
-  animation:chickenDance 1.2s infinite ease-in-out;
-  transform-origin:bottom center;
+
+/* MOBILE */
+@media(max-width:480px){
+  h1{font-size:1.5rem}
+  .chicken-dance{font-size:56px}
+  .message{font-size:.92rem}
 }
 
-@keyframes chickenDance{
-  0%   { transform:rotate(0deg) scale(1); }
-  15%  { transform:rotate(-12deg) scale(1.05); }
-  30%  { transform:rotate(12deg) scale(1.05); }
-  45%  { transform:rotate(-10deg) scale(1.1); }
-  60%  { transform:rotate(10deg) scale(1.1); }
-  75%  { transform:rotate(-6deg) scale(1.05); }
-  100% { transform:rotate(0deg) scale(1); }
-}
-.chicken-dance.party{
-  animation:chickenDance 0.5s infinite linear;
-}
-@media (max-width: 480px){
-  .card{
-    max-height: 80dvh;
-    overflow-y: auto;
-    background: rgba(255,255,255,.6);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 15px 40px rgba(0,0,0,.18);
-    border: 1px solid rgba(255,255,255,.35);
-  }
-
-  h1{
-    font-size: 1.6rem;
-  }
-
-  .chicken-dance{
-    font-size: 56px;
-  }
-
-  .message{
-    font-size: .9rem;
-    line-height: 1.5;
-  }
-
-  button{
-    padding: 12px 18px;
-    font-size: .95rem;
-  }
-}
-  @media (max-width: 768px) and (orientation: landscape){
-  .card{
-    max-height: 70dvh;
-    max-width: 90vw;
-    overflow-y: auto;
-  }
-
-  .chicken-dance{
-    font-size: 48px;
-  }
-
-  h1{
-    font-size: 1.4rem;
+/* LANDSCAPE MOBILE */
+@media(max-height:500px){
+  .wrapper{
+    align-items:flex-start;
   }
 }
 </style>
 </head>
+
 <body>
+
 <canvas id="fireworks"></canvas>
+
 <audio id="chickenSound" preload="auto">
   <source src="https://cdn.pixabay.com/download/audio/2025/04/30/audio_9834479b67.mp3?filename=happy-birthday-334876.mp3" type="audio/mpeg">
 </audio>
-<div class="card">
-  <div class="badge">🔥 SQUAD GATOT 🔥</div>
-<div class="chicken-dance">🐔</div>
-  <h1>Happy Birthday<br>Ainzard a.k.a Gatot Dua🎂</h1>
 
-  <div class="subtitle">
-    31 Desember • Akhir Tahun • PUBG Mobile
-  </div>
+<div class="wrapper">
+  <div class="card">
+    <div class="badge">🔥 SQUAD GATOT 🔥</div>
 
-  <div class="message">
-    Selamat ulang tahun, bro! 🥳  
-    <br><br>
-    Semoga di umur yang telah bertambah ini:
-    <br>🎯 Aim makin sakit  
-    <br>🏆 Rank makin tinggi  
-    <br>🔥 Biar Selalu Gendong Gatot Gatot Yang Lain  
-    <br><br>
-    Terima kasih sudah jadi bagian dari  
-    <b>SQUAD GATOT</b>.  
-    Tahun baru, kita gaskan makan ayam lagi! 🍗
-  </div>
+    <div class="chicken-dance">🐔</div>
 
-  <button onclick="dropLoot()">Chicken Dinner 🎁</button>
+    <h1>Happy Birthday<br>Ainzard a.k.a Gatot Dua 🎂</h1>
 
-  <div class="footer">
-    With respect, Squad GATOT ❤️
+    <div class="subtitle">
+      31 Desember • Akhir Tahun • PUBG Mobile
+    </div>
+
+    <div class="message">
+      Selamat ulang tahun, bro! 🥳<br><br>
+      🎯 Aim makin GATOT<br>
+      🏆 Makin Rajin MENGGATOT<br>
+      🔥 Makin Selalu gendong squad GATOT<br><br>
+      Tahun baru, kita gaskan makan ayam lagi! 🍗
+    </div>
+
+    <button onclick="dropLoot()">Chicken Dinner 🎁</button>
+
+    <div class="footer">
+      With respect, Squad GATOT ❤️
+    </div>
   </div>
 </div>
 
 <script>
 function dropLoot(){
-  // 🔊 PLAY SOUND
-  const sound = document.getElementById("chickenSound");
-  if(sound){
-    sound.currentTime = 0;
-    sound.play();
-  }
+  const sound=document.getElementById("chickenSound");
+  sound.currentTime=0;
+  sound.play();
 
-  // 🐔 AYAM PARTY MODE
-  const chicken = document.querySelector(".chicken-dance");
-  if(chicken){
-    chicken.classList.add("party");
-    setTimeout(()=>chicken.classList.remove("party"),3000);
-  }
+  const chicken=document.querySelector(".chicken-dance");
+  chicken.classList.add("party");
+  setTimeout(()=>chicken.classList.remove("party"),3000);
 
-  // 🎉 CONFETTI
-  const TOTAL = 300;          // JUMLAH CONFETTI
-  const DURATION = 10000;     // 10 DETIK
+  const TOTAL=260;
+  const DURATION=10000;
 
   for(let i=0;i<TOTAL;i++){
-    const c = document.createElement("div");
-    c.className = "confetti";
-    c.style.left = Math.random()*100 + "vw";
-    c.style.top = "-10px";
-    c.style.background = `hsl(${Math.random()*360},70%,80%)`; // pastel
-    c.style.animationDuration = 4 + Math.random()*4 + "s";
-    c.style.animationDelay = Math.random()*2 + "s";
-    c.style.width = c.style.height = 6 + Math.random()*6 + "px";
+    const c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=`hsl(${Math.random()*360},70%,80%)`;
+    c.style.animationDuration=4+Math.random()*4+"s";
+    c.style.animationDelay=Math.random()*2+"s";
     document.body.appendChild(c);
-
-    setTimeout(()=>c.remove(), DURATION);
+    setTimeout(()=>c.remove(),DURATION);
   }
 }
-
 </script>
 
 </body>
